@@ -2,9 +2,9 @@ function pintarTabla(){
     document.write('<table>');
 
     for(let i = 0; i < 25; i++){
-        document.write('<tr height="100px" width="1000px">');
+        document.write('<tr height="100px" width="100px">');
         for(let j = 0; j < 60; j++){
-            document.write('<td height="100px" width="1000px"></td>');
+            document.write('<td height="100px" width="100px"></td>');
         }
         document.write('</tr>');
     }
@@ -33,7 +33,7 @@ for(let k = 0; k < td.length; k++){
 const boton = document.querySelector("button");
 
 boton.addEventListener("click", () => {
-    const tabla = document.querySelector("table");
-    
-    tabla.remove();
+    for(let l = 0; l < td.length; l++){
+        td[l].style.backgroundColor = "white";
+    }   
 })
