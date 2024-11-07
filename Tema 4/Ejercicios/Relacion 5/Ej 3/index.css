@@ -1,0 +1,44 @@
+body{
+    background-color: lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;    
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input{
+    background-color: transparent;
+    width: 17rem;
+    text-align: center;
+    border: 0px;
+    border-bottom: 3px solid #F8DCB9;
+    font-size: 2.4em;
+    color: #E8A7A8;
+}
+
+input::placeholder{
+    color: #E8A7A8;
+}
+
+li{
+    font-size: 1.4em;
+    color: #F8DCB9;
+}
+
+#boton{
+    background-color: #F8DCB9;
+    width: 8em;
+    height: 2.5em;
+    border-radius: 5%;
+    border: 0;
+    color: lightcoral;
+}
+

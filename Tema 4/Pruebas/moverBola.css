@@ -1,0 +1,9 @@
+#bola{
+    background-color: rgb(207, 120, 120);
+    border-radius: 50%;
+    width: 20em;
+    height: 20em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

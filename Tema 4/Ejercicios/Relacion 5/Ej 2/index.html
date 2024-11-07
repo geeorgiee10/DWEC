@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="index.js"></script>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            background-color: lightskyblue;
+            width: 30em;
+        }
+        .campo{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0.5em;
+            height: 10vh;
+            margin-left: 2em;
+        }
+
+        input{
+            width: 20em;
+            margin-top: 0.5em;
+        }
+        h1{
+            text-align: center;
+        }
+        .validar{
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <form>
+        <h1>Formulario</h1>
+        <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre">
+            <div class="validar"></div>
+        </div>
+        <div class="campo">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos">
+            <div class="validar"></div>
+        </div>
+        <div class="campo">
+            <label for="dni">DNI</label>
+            <input type="text" id="dni">
+            <div class="validar"></div>
+        </div>
+        <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono">
+            <div class="validar"></div>
+        </div>
+        <div class="campo">
+            <label for="email">Email</label>
+            <input type="text" id="email">
+            <div class="validar"></div>
+        </div>
+        <div class="campo">
+            <label for="usuario">Nombre de Usuario</label>
+            <input type="text" id="usuario">
+            <div class="validar"></div>
+        </div>
+
+
+
+
+    </form>
+</body>
+</html>
