@@ -12,17 +12,19 @@
     <div class="card-preview">
         <div class="carta">
             <div class="frente">
-              <img src="frente.jpg" alt="frente">
+              <input type="text" id="numeroTarjeta" readonly>
+              <input type="text" id="propTarjeta" readonly>
+              <input type="text" id="fechaTarjeta" readonly>
             </div>
             <div class="reves">
-              <img src="realistic-credit-card-mockup-template-free-vector.jpg" alt="reves">
+              <input type="text" id="cvvTarjeta" readonly>
             </div>
           </div>
     </div>
     <form action="#" method="POST">
       <div class="form-group">
         <label for="card-number">Número de tarjeta</label>
-        <input type="text" id="card-number" name="card-number" placeholder="#### #### #### ####" required>
+        <input type="text" id="card-number" name="card-number" placeholder="#### #### #### ####" maxlength="19" required>
       </div>
       <div class="form-group">
         <label for="card-holder">Titular de la tarjeta</label>
@@ -49,16 +51,18 @@
             </select>
             <select id="expiry-year" name="expiry-year" required>
               <option value="">Año</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
+              <option value="25">2025</option>
+              <option value="26">2026</option>
+              <option value="27">2027</option>
+              <option value="28">2028</option>
+              <option value="29">2029</option>
+              <option value="30">2030</option>
             </select>
           </div>
         </div>
         <div class="cvv">
           <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" placeholder="###" required>
+          <input type="text" id="cvv" name="cvv" placeholder="###" maxlength="3" required>
         </div>
       </div>
       <button type="submit" class="submit-btn">Enviar</button>
