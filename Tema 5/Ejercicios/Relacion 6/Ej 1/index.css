@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#barchart_material {
+    margin: 2em;
+    width: 60em;
+    height: 35em;
+}
+
+@media (max-width: 50em) {
+    #barchart_material {
+        width: 30em; 
+        height: 14em; 
+        min-width: 15em; 
+        min-height: 8em;
+    }
+}
