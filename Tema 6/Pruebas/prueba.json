@@ -1,0 +1,49 @@
+{
+    "players": [
+      {
+        "id": 1,
+        "name": "Lionel Messi",
+        "position": "Delantero",
+        "nationality": "Argentina",
+        "goals": 804,
+        "champions": "Si",
+        "numChampions": "4"
+      },
+      {
+        "id": 2,
+        "name": "Cristiano Ronaldo",
+        "position": "Delantero",
+        "nationality": "Portugal",
+        "goals": 846,
+        "champions": "Si",
+        "numChampions": "5"
+      },
+      {
+        "id": 3,
+        "name": "Neymar Jr.",
+        "position": "Delantero",
+        "nationality": "Brasil",
+        "goals": 435,
+        "champions": "Si",
+        "numChampions": "2"
+      },
+      {
+        "id": 4,
+        "name": "Zinedine Zidane",
+        "position": "Mediocampista",
+        "nationality": "Francia",
+        "goals": 125,
+        "champions": "Si",
+        "numChampions": "2"
+      },
+      {
+        "id": 5,
+        "name": "Diego Maradona",
+        "position": "Mediocampista Ofensivo",
+        "nationality": "Argentina",
+        "goals": 259,
+        "champions": "No",
+        "numChampions": "0"
+      }
+    ]
+  }
