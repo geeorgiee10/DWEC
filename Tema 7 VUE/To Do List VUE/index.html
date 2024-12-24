@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <script src="index.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="container">
+
+        <h1>Lista de Tareas de Jorge</h1>
+        <div class="input-container">
+            <input type="text" id="groceryInput" placeholder="¿Qué Quieres Recordar?" v-model="text" v-on:keyup.enter="anadir()">
+            <button id="boton" v-on:click="anadir()" >Añadir</button>
+        </div>
+
+        <div class="tareasCompletadas--item">
+            <span ><i class="fa-solid fa-chart-simple"></i> {{ tareasCompletadas() }} tareas pendientes de un total de {{ elementos.length }}</span> | <a id="borrarCompletadas" v-on:click="borrarCompletadas()"><i class="fa-solid fa-x"></i> Borrar tareas completadas</a>
+        </div>
+        <ul id="lista">
+            
+            <li v-for="(elemento,index) in elementos" :id="index" class="tarea">
+                <div id="tareaOpciones">
+
+                    <input type="checkbox" class="radioCompletada" v-model="elemento.completada" v-on:click="completar(index)">
+
+                    <span v-bind:class="{ estaCompletada: elemento.completada }">{{ elemento.titulo }}</span>
+
+                    <button v-on:click="borrar(index)" id="borrarTarea"><i class="fa-solid fa-delete-left"></i> Borrar</button>
+
+                </div>
+                
+                <div id="prioridad">
+
+                    <span >Prioridad:</span>
+
+                    <div id="botonesPrioridad">
+
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 0 }" v-on:click="cambiarPrioridad(index,0)">Baja</button>
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 1 }" v-on:click="cambiarPrioridad(index,1)">Media</button>
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 2 }" v-on:click="cambiarPrioridad(index,2)">Alta</button>
+
+                    </div>
+
+                    <span><i class="fa-solid fa-clock"></i> Añadido hace {{ elemento.tiempoPasado }} minutos</span>
+                </div>
+
+                
+            </li>
+        </ul>
+        <button id="vaciar" v-on:click="vaciar()">Borrar tareas</button>
+
+    </div>
+</body>
+</html>
