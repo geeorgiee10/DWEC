@@ -1,11 +1,12 @@
 <script setup>
 
-  import { ref,  onMounted } from 'vue'
+  import { ref, onMounted } from 'vue';
+  import Cabecera from './components/Cabecera.vue';
 
-  const text =  ref('');
+  
   const elementos= ref([]);
 
-  function anadir(){
+  function anadir(text){
     let nuevaNota = {
         id: "",
         titulo: text.value,
@@ -22,7 +23,7 @@
   function almacenar(){
     localStorage.setItem('elementos', JSON.stringify(elementos.value));
   }
-
+  
   function vaciar(){
     elementos.value = [];
     almacenar();
@@ -73,7 +74,7 @@
       }
     });
   }
-
+ 
   onMounted(() => {
     cargar();
     ordenar();
@@ -87,11 +88,8 @@
 <template>
 
 <div id="container">
-    <h1>Lista de Tareas de Jorge</h1>
-        <div class="input-container">
-            <input type="text" id="groceryInput" placeholder="¿Qué Quieres Recordar?" v-model="text" v-on:keyup.enter="anadir()">
-            <button id="boton" v-on:click="anadir()" >Añadir</button>
-        </div>
+
+       <Cabecera v-on:introducirTexto="anadir"></Cabecera>
 
         <div class="tareasCompletadas--item">
             <span ><i class="fa-solid fa-chart-simple"></i> {{ tareasCompletadas() }} tareas pendientes de un total de {{ elementos.length }}</span> | <a id="borrarCompletadas" v-on:click="borrarCompletadas()"><i class="fa-solid fa-x"></i> Borrar tareas completadas</a>
@@ -162,25 +160,7 @@
     /* height: auto; */
   }
   
-  h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
   
-  .input-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  #groceryInput {
-    width: 70%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
 
   .tareasCompletadas--item{
     border-bottom: 1px solid #ddd;
@@ -198,19 +178,6 @@
     cursor: pointer;
   }
   
-  #boton {
-    width: 29%;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  #boton:hover {
-    background-color: #0056b3;
-  }
 
   
   
