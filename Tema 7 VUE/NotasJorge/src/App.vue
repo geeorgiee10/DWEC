@@ -63,7 +63,7 @@
       ordenar();
     },
     { deep: true }
-)
+  )
 
 </script>
 

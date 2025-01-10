@@ -10,8 +10,8 @@
     }
 
     const tareasCompletadas = computed(() =>{
-        return props.elementos.filter(tarea => tarea.completada == false).length;   
-    })
+        return props.elementos.filter((tarea) => !tarea.completada).length;   
+    });
 
 </script>
 

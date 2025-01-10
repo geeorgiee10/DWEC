@@ -18,7 +18,6 @@
     }
 
     function fecha(){
-        
         let fechaAhora = new Date().getTime();
         let diferencia = Math.floor((fechaAhora - props.elemento.horaCreacion) / 1000);
         if (diferencia < 3600) {
