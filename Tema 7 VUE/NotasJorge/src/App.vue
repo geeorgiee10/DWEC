@@ -5,40 +5,58 @@
   import Pie from './components/Pie.vue';
   import InforTareas from './components/InforTareas.vue';
   import ListaTareas from './components/ListaTareas.vue';
+  import Login from './components/Login.vue';
+
+  import { useFirestore } from 'vuefire'
+  import { useCollection } from 'vuefire'
+  import { collection, addDoc, query, orderBy, doc, deleteDoc} from 'firebase/firestore'
   
-  const elementos= ref([]);
+  //const elementos= ref([]);
+  const db = useFirestore()
+  var elementos = useCollection(
+    query(collection(db, 'recordatorios'),orderBy("Prioridad", "desc"))
+  );
 
   function anadir(text){
     let nuevaNota = {
-        id: "",
-        titulo: text.value,
-        completada: false,
-        prioridad: 0,
-        horaCreacion: new Date().getTime(),
-        tiempoPasado: 0
+        Nombre: text.value,
+        Completada: false,
+        Prioridad: 0,
+        Fecha_Creacion: new Date().getTime(),
+        TiempoPasado: 0
     }
-    elementos.value.push(nuevaNota);
+    //elementos.value.push(nuevaNota);
+    // Add a new document with a generated id.
+    const docRef = addDoc(collection(db, "recordatorios"), nuevaNota)
+    .then( (docRef) => {
+      console.log("Document");
+      
+
+    }).catch( (error) => {
+       console.log("Error = " + error);
+       
+    });
+
     text.value = "";
   }
 
   function borrarCompletadas(){
-    elementos.value = elementos.value.filter(tarea => tarea.completada == false);
+    elementos.value.forEach(element => {
+      if(element.Completada == true){
+        deleteDoc(doc(db, "recordatorios", element.id));
+      }
+    });
+    //elementos.value = elementos.value.filter(tarea => tarea.completada == false);
   }
 
   function vaciar(){
-    elementos.value = [];
-  }
-
-  function cargar(){
-    const datosGuardados = localStorage.getItem('elementos');
-    if (datosGuardados)
-      elementos.value = JSON.parse(datosGuardados);
+    elementos.value.forEach(element => {
+        deleteDoc(doc(db, "recordatorios", element.id));
+      
+    });
   }
   
 
-  function ordenar(){
-    elementos.value.sort((a,b) => b.prioridad - a.prioridad);
-  }
 
   /*function fecha(){
     elementos.value.forEach(element => {
@@ -51,25 +69,16 @@
     });
   }*/
  
-  onMounted(() => {
-    cargar();
-    ordenar();
-  })
 
-  watch(
-    () => elementos,
-    (newValue, oldValue) => {
-      localStorage.setItem('elementos', JSON.stringify(elementos.value));
-      ordenar();
-    },
-    { deep: true }
-  )
+  
 
 </script>
 
 <template>
 
   <div id="container">
+
+      <Login></Login>
 
       <Cabecera v-on:introducirTexto="anadir"></Cabecera>
 

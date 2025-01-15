@@ -1,9 +1,10 @@
 <script setup>
 
-    import { onMounted } from 'vue';
+    import { onMounted} from 'vue';
 
     const props = defineProps(['elemento', 'index'])
     const emit = defineEmits(['completarTarea', 'borrarTarea', 'CambiarPrioridad']);
+
 
     function borrar (index){
         emit('borrarTarea', index);
@@ -19,11 +20,19 @@
 
     function fecha(){
         let fechaAhora = new Date().getTime();
-        let diferencia = Math.floor((fechaAhora - props.elemento.horaCreacion) / 1000);
+        let diferencia = Math.floor((fechaAhora - props.elemento.Fecha_Creacion) / 1000);
         if (diferencia < 3600) {
             let minutos = Math.floor(diferencia / 60);
-            props.elemento.tiempoPasado = minutos;
+            props.elemento.TiempoPasado = minutos;
+
+            return props.elemento.TiempoPasado + " minutos";
         }
+        else {
+            let horas = Math.floor(diferencia / 3600);
+            props.elemento.TiempoPasado = horas;
+
+            return props.elemento.TiempoPasado + " horas";
+        } 
     }
 
     onMounted(() => {
@@ -40,9 +49,9 @@
             <li :id="index" class="tarea">
                 <div id="tareaOpciones">
 
-                    <input type="checkbox" class="radioCompletada" v-model="elemento.completada" v-on:click="completar(index)">
+                    <input type="checkbox" class="radioCompletada" v-model="elemento.Completada" v-on:click="completar(index)">
 
-                    <span v-bind:class="{ estaCompletada: elemento.completada }">{{ elemento.titulo }}</span>
+                    <span v-bind:class="{ estaCompletada: elemento.Completada }">{{ elemento.Nombre }}</span>
 
                     <button v-on:click="borrar(index)" id="borrarTarea"><i class="fa-solid fa-delete-left"></i> Borrar</button>
 
@@ -54,13 +63,13 @@
 
                     <div id="botonesPrioridad">
 
-                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 0 }" v-on:click="prioridad(index,0)">Baja</button>
-                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 1 }" v-on:click="prioridad(index,1)">Media</button>
-                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.prioridad == 2 }" v-on:click="prioridad(index,2)">Alta</button>
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.Prioridad == 0 }" v-on:click="prioridad(index,0)">Baja</button>
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.Prioridad == 1 }" v-on:click="prioridad(index,1)">Media</button>
+                        <button class="btnPrioridad" v-bind:class="{ btnPrioridadActivo: elemento.Prioridad == 2 }" v-on:click="prioridad(index,2)">Alta</button>
 
                     </div>
 
-                    <span><i class="fa-solid fa-clock"></i> Añadido hace {{ elemento.tiempoPasado }} minutos</span>
+                    <span><i class="fa-solid fa-clock"></i> Añadido hace {{ fecha() }}</span>
                 </div>
 
                 
