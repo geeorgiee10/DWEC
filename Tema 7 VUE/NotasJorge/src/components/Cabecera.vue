@@ -1,19 +1,23 @@
 <script setup>
  import { ref } from 'vue';
 
-const emit = defineEmits(['introducirTexto']);
+ import { useCurrentUser} from 'vuefire';
 
-const text =  ref('');
+  const user = useCurrentUser();
 
-function texto (){
+  const emit = defineEmits(['introducirTexto']);
+
+  const text =  ref('');
+
+  function texto (){
     emit('introducirTexto', text);
-}
+  }
 
 </script>
 
 <template>
 
-    <h1>Lista de Tareas de Jorge</h1>
+    <h1>Lista de Tareas de {{ user.displayName ? user.displayName : user.email }}</h1>
         <div class="input-container">
             <input type="text" id="groceryInput" placeholder="¿Qué Quieres Recordar?" v-model="text" v-on:keyup.enter="texto()">
             <button id="boton" v-on:click="texto()" >Añadir</button>
@@ -25,7 +29,7 @@ function texto (){
 h1 {
     text-align: center;
     font-size: 24px;
-    color: #333;
+    color:  #E0E6ED;
     margin-bottom: 20px;
   }
   
@@ -45,7 +49,7 @@ h1 {
   #boton {
     width: 29%;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #1D74F5;
     color: white;
     border: none;
     border-radius: 4px;

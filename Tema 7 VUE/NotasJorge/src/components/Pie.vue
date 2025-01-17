@@ -23,12 +23,12 @@
         margin-top: 3rem;
     }
     span{
-        color: gray;
+        color:  #ddd;
         text-align: center;
     }
     a{
         text-decoration: none;
-        color: rgb(87, 161, 87);
+        color: #1DB954;
     }
  
 </style>

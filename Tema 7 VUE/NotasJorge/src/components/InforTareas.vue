@@ -18,7 +18,7 @@
 <template>
 
     <div class="tareasCompletadas--item">
-        <span ><i class="fa-solid fa-chart-simple"></i> {{ tareasCompletadas }} tareas pendientes de un total de {{ elementos.length }}</span> | <a id="borrarCompletadas" v-on:click="borrar()"><i class="fa-solid fa-x"></i> Borrar tareas completadas</a>
+        <span > {{ tareasCompletadas }} tareas pendientes de un total de {{ elementos.length }}</span> | <a id="borrarCompletadas" v-on:click="borrar()"><i class="fa-solid fa-x"></i> Borrar tareas completadas</a>
     </div>
 
 </template>
@@ -33,10 +33,11 @@
 
   .tareasCompletadas--item span{
     margin-right: 0.4rem;
+    color: #ddd;
   }
 
   #borrarCompletadas{
-    color: darkgoldenrod;
+    color:  #F1C40F;
     margin-left: 0.4rem;
     cursor: pointer;
   }

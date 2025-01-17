@@ -4,7 +4,18 @@
 
     import { useFirestore } from 'vuefire'
     import { useCollection } from 'vuefire'
-    import { doc, updateDoc, deleteDoc } from 'firebase/firestore'
+    import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
+
+
+    import {signOut,} from 'firebase/auth'
+    import { useCurrentUser, useFirebaseAuth } from 'vuefire'
+
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+    
+    const auth = useFirebaseAuth();
+    const user = useCurrentUser()
 
     const props = defineProps(['elementos'])
     const emit = defineEmits(['borrarTareas', 'ordenar']);
@@ -39,6 +50,15 @@
         //props.elementos[index].Prioridad = num;
     }
 
+    function cerrarSesion(){
+        signOut(auth).then(
+            router.push("/"),
+            ()=>console.log("Se ha cerrado la sesion")
+        ).catch((reason) => {
+            console.error("Failed sign out", reason)
+        });
+    }
+
 </script>
 
 <template>
@@ -58,6 +78,7 @@
 
     <!-- </ul> -->
     <button id="vaciar" v-on:click="borrarTodo()">Borrar tareas</button> 
+    <button id="logout" @click="cerrarSesion">Cerrar sesión</button> 
 
 </template>
 
@@ -65,7 +86,7 @@
 
     #lista {
         list-style-type: none;
-        background-color: #ddd;
+        background-color: #D9E2EC;
         margin-top: 1rem;
         padding: 0.5rem;
         padding-bottom: 0;
@@ -79,18 +100,18 @@
         justify-content: center;
     }
 
-    #vaciar {
+    #vaciar, #logout {
         width: 100%;
         padding: 10px;
         border: none;
-        color: #dc3545;
+        color: #FF5C5C;
         border-radius: 4px;
         cursor: pointer;
         margin-top: 20px;
     }
   
-    #vaciar:hover {
-        background-color: #ff2b38;
+    #vaciar:hover, #logout:hover {
+        background-color: #FF5C5C;
         color: white;
     }
 

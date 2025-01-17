@@ -45,7 +45,7 @@
 
 <template>
 
-            
+      <Transition>            
             <li :id="index" class="tarea">
                 <div id="tareaOpciones">
 
@@ -53,7 +53,7 @@
 
                     <span v-bind:class="{ estaCompletada: elemento.Completada }">{{ elemento.Nombre }}</span>
 
-                    <button v-on:click="borrar(index)" id="borrarTarea"><i class="fa-solid fa-delete-left"></i> Borrar</button>
+                    <button v-on:click="borrar(index)" id="borrarTarea"><i class="fa-solid fa-x"></i> Borrar</button>
 
                 </div>
                 
@@ -74,6 +74,7 @@
 
                 
             </li>
+      </Transition>
 
 </template>
 
@@ -116,7 +117,7 @@
     width: auto;
     padding: 10px;
     border: none;
-    background-color: #ff2b38;
+    background-color: #FF4D4D;
     color: white;
     border-radius: 4px;
     cursor: pointer;
