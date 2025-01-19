@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onMounted, watch  } from 'vue'
 
-    import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+    import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, GithubAuthProvider  } from 'firebase/auth'
     import {
         signInWithPopup
     } from 'firebase/auth'
@@ -14,17 +14,17 @@
     
     
     const auth = useFirebaseAuth();
-    const googleAuthProvider = new GoogleAuthProvider()
-    const user = useCurrentUser()
+    const googleAuthProvider = new GoogleAuthProvider();
+    const githubAuthProvide = new GithubAuthProvider();
+    const user = useCurrentUser();
 
     const error = ref("");
     const correo = ref('')
     const contraseña = ref('')
     const estaIniciado = ref(true)
 
-    async function iniciarSesion(){
+    async function iniciarSesionGoogle(){
         await signInWithPopup(auth, googleAuthProvider).then(() => {
-            router.push("/recordatorios");
             console.log("Validación correcta");
         })
         .catch((reason) => {
@@ -32,8 +32,13 @@
         });   
     }
 
-    function redirigir(){
-        router.push("/recordatorios");
+    async function iniciarSesionGithub(){
+        await signInWithPopup(auth, githubAuthProvide).then(() => {
+            console.log("Validación correcta");
+        })
+        .catch((reason) => {
+            console.error("Failed sign", reason)
+        });   
     }
 
     async function loginContraseña(){
@@ -51,28 +56,18 @@
         }
     }
     
-
-    onMounted(() => {
-        if(user){
-            redirigir();
-        }
-    })
-
-    watch(user, (newUser) => {
-    if (newUser) {
-        redirigir();
-    }
-});
-
 </script>
 
 <template>
 
-    <div v-if="!user">
-        <button @click="iniciarSesion">Iniciar Sesion con Github <img src="https://www.github.com\favicon.ico" alt="Google"></button>
-        <button @click="iniciarSesion">Iniciar Sesion con Google <img src="https://www.google.com\favicon.ico" alt="Google"></button>
+    <div v-if="!user" class="formulario">
+        <h2 class="tituloForm">{{ estaIniciado  ? 'Iniciar sesión' : 'Registrarse' }}</h2>
+
+        <button @click="iniciarSesionGithub" class="btnGithub"><i class="fa-brands fa-github" id="logoGithub"></i> Inicia con Github</button>
+        <button @click="iniciarSesionGoogle" class="btnGoogle"><img src="https://www.google.com\favicon.ico" alt="Google"> Inicia con Google</button>
         
-        <h2>{{ estaIniciado  ? 'Iniciar sesión' : 'Registrarse' }}</h2>
+        <hr class="separacion">
+        
         <form class="{{ estaIniciado }} ? iniciarSesion : registrarse" @submit.prevent="loginContraseña">
 
             <label for="correo">Corrreo</label>
@@ -101,9 +96,134 @@
 
 <style scoped>
 
-    label, h2{
-        color: white;
+    .formulario{
+        width: 40%;
+        height: 40rem;
+        align-self: center;
+        justify-self: center;
+        margin-top: 2rem;
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 3rem;
     }
 
+    .tituloForm{
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .btnGithub{
+        width: 90%;
+        height: 3rem;
+        background-color: black;
+        border: none;
+        border: 1px solid white;
+        color: white;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        transition: all 1s;
+        cursor: pointer;
+    }
+
+    #logoGithub{
+        font-size: 2rem;
+    }
+
+    .btnGoogle{
+        width: 90%;
+        height: 3rem;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        transition: all 1s;
+        cursor: pointer;
+    }
+    
+    .btnGithub:hover,  .btnGoogle:hover{
+        transform: scale(1.1);
+    }
+
+    .separacion{
+        width: 100%;
+        color: gray;
+    }
+
+    .iniciarSesion, .registrarse{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: 20rem;
+        padding: 0.5rem;
+    }
+
+    .iniciarSesion label, .registrarse label{
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .iniciarSesion input, .registrarse input{
+        width: 100%;
+        height: 2rem;
+        border: solid 1px #ddd;
+        border-radius: 10px;
+        padding: 1rem;
+        color: black;
+        transition: all 1s;
+    }
+
+    .iniciarSesion input:focus, .registrarse input:focus{
+        transform: scale(1.1);
+        box-shadow: 2px 4px 10px rgba(76, 110, 245, 0.5);
+    }
+
+    .iniciarSesion button, .registrarse button{
+        width: 100%;
+        height: 2.5rem;
+        margin-top: 1.5rem;
+        border: none;
+        background-color: #4C6EF5;
+        color: white;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 1s;
+    }
+
+    .iniciarSesion button:hover, .registrarse button:hover{
+        background-color: white;
+        color: #4C6EF5;
+        border: 1px solid #4C6EF5;
+        transform: scale(1.1);
+    }
+
+    .cambiarForm span{
+        color: #4C6EF5
+    }
+
+    .cambiarForm span:hover{
+        text-decoration: underline;
+    }
+
+
+    @media (max-width: 1000px) {
+        .formulario{
+            width: 90%;
+            padding: 2rem;
+        }
+    }
   
 </style>

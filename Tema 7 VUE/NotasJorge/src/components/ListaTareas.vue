@@ -8,14 +8,13 @@
 
 
     import {signOut,} from 'firebase/auth'
-    import { useCurrentUser, useFirebaseAuth } from 'vuefire'
+    import { useFirebaseAuth } from 'vuefire'
 
     import { useRouter } from 'vue-router';
 
     const router = useRouter();
     
     const auth = useFirebaseAuth();
-    const user = useCurrentUser()
 
     const props = defineProps(['elementos'])
     const emit = defineEmits(['borrarTareas', 'ordenar']);
@@ -65,7 +64,7 @@
 
     <!-- <ul > -->
 
-    <TransitionGroup id="lista" name="notas" tag="ul">
+    <TransitionGroup v-if="elementos.length > 0" id="lista" name="notas" tag="ul">
         <Nota class="notas" v-for="(elemento, index) in elementos" 
             :key="elemento.id"
             :elemento="elemento" 

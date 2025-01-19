@@ -30,7 +30,7 @@ const router = createRouter({
 //createApp(App).mount('#app')
 const app = createApp(App)
 
-app.use(VueFire, {
+  app.use(VueFire, {
     // imported above but could also just be created here
     firebaseApp,
     modules: [

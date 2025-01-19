@@ -61,5 +61,21 @@ h1 {
     background-color: #0056b3;
   }
 
+  @media (max-width: 900px) {
+      .input-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      #groceryInput {
+        width: 100%;
+        padding: 10px;
+      }
+
+      #boton {
+        width: 100%;
+        margin-left: 0;
+      }
+  }
  
 </style>

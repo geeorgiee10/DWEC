@@ -51,7 +51,7 @@
 
                     <input type="checkbox" class="radioCompletada" v-model="elemento.Completada" v-on:click="completar(index)">
 
-                    <span v-bind:class="{ estaCompletada: elemento.Completada }">{{ elemento.Nombre }}</span>
+                    <span v-bind:class="{ estaCompletada: elemento.Completada }" class="nombreTarea">{{ elemento.Nombre }}</span>
 
                     <button v-on:click="borrar(index)" id="borrarTarea"><i class="fa-solid fa-x"></i> Borrar</button>
 
@@ -193,6 +193,47 @@
     cursor: pointer;
   }
   
-  
+  @media (max-width: 900px) {
+
+      li {
+        border-bottom: 3px solid gray;
+      } 
+
+      #tareaOpciones {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .nombreTarea{
+        font-size: 1.2rem;
+      }
+
+
+      #prioridad {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      #botonesPrioridad {
+        width: 100%; 
+        font-size: 14px;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .btnPrioridad {
+        width: 100%;
+      }
+
+      #borrarTarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+      }
+  }
  
 </style>
