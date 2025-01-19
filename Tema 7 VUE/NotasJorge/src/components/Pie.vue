@@ -7,7 +7,7 @@
 
     <div id="pie">
         <span>Desarrollado por Jorge Arcoya López.</span>
-        <span>Código disponible en <a href="https://github.com/geeorgiee10/DWEC/tree/main/Tema%207%20VUE/NotasJorge" target="_blank"><i class="fa-brands fa-github"></i> Github</a></span>
+        <span>Código disponible en <a href="https://github.com/geeorgiee10/Recordatorios/tree/main" target="_blank"><i class="fa-brands fa-github"></i> Github</a></span>
     </div>
 
 </template>
