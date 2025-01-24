@@ -5,12 +5,11 @@ function App() {
     
   var animals = ['dog 🐶', 'cat', 'chicken', 'cow', 'sheep', 'horse'];
 
-  const lista = List(animals);
 
     return (
       <>
         
-        {lista}
+        <List items={animals}></List>
         
       </>
     )

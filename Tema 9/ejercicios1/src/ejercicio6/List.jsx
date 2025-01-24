@@ -1,6 +1,6 @@
 
 
-export function List(items) {
+export function List({items}) {
     
 
   const listAnimals = items.map(item =>
