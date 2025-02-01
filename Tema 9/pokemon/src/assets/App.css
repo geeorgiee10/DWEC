@@ -1,0 +1,30 @@
+@import url(./header.css); 
+@import url(./footer.css);
+@import url(./listado.css);
+@import url(./detalles.css);
+@import url(./juego.css);
+@import url(./landingPage.css);
+@import url(./login.css);
+@import url(./error404.css);
+
+:root {
+    --color-principal: #FF0000; 
+    --color-texto-secundario: #FFFFFF;
+    --color-secundario: #FFCC00;
+    --color-pikachu: #FFD700;
+
+    --radius: 10px;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+    height: auto;
+}

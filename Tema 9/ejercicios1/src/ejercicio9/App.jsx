@@ -6,11 +6,15 @@ function App() {
   const [data, setData] = useState([]);
 
 
-    useEffect(() => {
+    const cargar = () => {
       fetch('https://random-data-api.com/api/users/random_user?size=10')
         .then(response => response.json())  
         .then(data => setData(data))   
         .catch(error => console.error('Error:', error));  
+    };
+
+    useEffect(() => {
+      cargar();
     }, []);
 
 
@@ -25,7 +29,9 @@ function App() {
       <>
         <div className='contenedor'>
           {mostrar}
+          
         </div>
+        <button className='btnCargar' onClick={cargar}>Cargar otros elementos</button>
         
       </>
     )
