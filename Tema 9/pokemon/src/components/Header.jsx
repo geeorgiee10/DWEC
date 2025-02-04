@@ -43,7 +43,7 @@ export function Header() {
       <nav className="navbar d-flex flex-row align-items-center justify-content-center navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
             <Link className="logo" to="/">
-              <a className="navbar-brand" href="#"><img src="../public/pokemon-23.svg" className="imgLogo" alt="Pokémon" /></a>
+              <span className="navbar-brand" href="#"><img src="../public/pokemon-23.svg" className="imgLogo" alt="Pokémon" /></span>
             </Link>  
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -52,19 +52,27 @@ export function Header() {
                 <ul className="navbar-nav">
                   <Link className="LinkRouter" to="/">
                     <li className="nav-item">
-                        <a className="nav-link" aria-current="page" >Inicio</a>
+                        <span className="nav-link" aria-current="page" >Inicio</span>
                     </li>
                   </Link>
                   <Link className="LinkRouter" to="/pokemon">
                     <li className="nav-item">
-                        <a className="nav-link">Pokémons</a>
+                        <span className="nav-link">Pokémons</span>
                     </li>
                   </Link> 
 
                   {estaIniciado && (
                       <Link className="LinkRouter" to="/juego">
                         <li className="nav-item">
-                          <a className="nav-link">Juegos</a>
+                          <span className="nav-link">Juegos</span>
+                        </li>
+                      </Link>
+                  )} 
+
+                  {estaIniciado && (
+                      <Link className="LinkRouter" to="/ranking">
+                        <li className="nav-item">
+                          <span className="nav-link">Ranking</span>
                         </li>
                       </Link>
                   )} 
@@ -73,14 +81,14 @@ export function Header() {
                   {!estaIniciado && (
                     <Link className="LinkRouter" to="/login">
                         <li className="nav-item">
-                          <a className="nav-link">Iniciar Sesión</a>
+                          <span className="nav-link">Iniciar Sesión</span>
                         </li>
                     </Link> 
                   )} 
 
                   {estaIniciado && (
                     <li className="nav-item" onClick={cerrarSesion}>
-                        <a className="nav-link">Cerrar Sesión</a>
+                        <span className="nav-link">Cerrar Sesión</span>
                     </li>
                   )}
 

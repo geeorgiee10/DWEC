@@ -1,5 +1,7 @@
 import { useState,useEffect } from 'react';
-
+import { collection, addDoc, updateDoc, where, getDocs, query } from "firebase/firestore";
+import { db } from "../../firebase";
+import { getAuth } from "firebase/auth";
 
 export function Juego() {
     const [number, setNumber] = useState(Math.floor(Math.random() * 1025) + 1);
@@ -8,7 +10,14 @@ export function Juego() {
     const [resultado, setResultado] = useState(false);
     const [intentos, setIntentos] = useState(0);
     const [acertado, setAcertado] = useState(3);
+    const [puntos, setPuntos] = useState(0);
+    const [usuario, setUsuario] = useState(null);
 
+
+    useEffect(() => {
+        const auth = getAuth();
+        setUsuario(auth.currentUser); 
+    }, []); 
 
     const pokemon = () => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${number}/`)
@@ -18,6 +27,7 @@ export function Juego() {
             setResultado(false);
             setIntentos(0);
             setAcertado(3);
+            setPuntos(0);
           })
           .catch(error => console.error('Error:', error));
     };
@@ -26,12 +36,12 @@ export function Juego() {
         pokemon();
     }, [number]);
 
-
     const mostrar = data.map((dato) =>(
         <div key={dato.id} className='card m-auto'>
             <img className='imgCard' src={dato.sprites.other['official-artwork'].front_default} alt="Pokémon"/>
             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                 <h5 className="card-title">{dato.species.name}</h5>
+                <h3>Puntos: {puntos}</h3>
             </div>
         </div>      
     ));
@@ -41,9 +51,7 @@ export function Juego() {
             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                 <div className="types-container">
                 {dato.types.map((tipo, index) => (
-                    
                         <span key={index} className="badge bg-primary mx-1">{tipo.type.name}</span>
-                    
                 ))}
                 </div>
 
@@ -62,6 +70,26 @@ export function Juego() {
         </div>      
     ));
 
+    const almacenarPuntuacion = async () => {
+
+        try {
+            const consulta = query(collection(db, 'ranking'), where("Usuario", "==", usuario.uid));
+            const consultaPuntosUsuario = await getDocs(consulta);
+
+            consultaPuntosUsuario.forEach((doc) => {
+                const nuevosPuntos = doc.data().Puntuacion || 0;
+                    updateDoc(doc.ref, {
+                        Puntuacion: nuevosPuntos + puntos
+                    });
+            });
+                          
+            
+        } 
+        catch (error) {
+            console.log("Error al guardar la puntuación " + error);
+        }
+    };
+
     const handleChange = (event) => {
         setNombrePokemon(event.target.value);  
     };
@@ -79,8 +107,6 @@ export function Juego() {
             setNombrePokemon(''); 
     };
 
-    
-
     function comprobar(){
 
         data.forEach((dato) => {
@@ -88,28 +114,37 @@ export function Juego() {
             if(nombrePokemon.toLowerCase() === dato.species.name.toLowerCase()){
                 setResultado(true);
                 setAcertado(1);
+
+                setPuntos((prevPuntos) => {
+                    if (intentos === 0) return prevPuntos + 10;
+                    else if (intentos === 1) return prevPuntos + 5;
+                    else if (intentos === 2) return prevPuntos + 3;
+                    return prevPuntos;
+                });
             }
             else if(intentos == 2){
                 setResultado(true);
                 setAcertado(2);
+                setPuntos(0);
             }
             else{
                 setIntentos(intentos + 1);
                 setAcertado(3);
             }
-
         });
     }
 
     const jugarOtraVez = () => {
         setNumber(Math.floor(Math.random() * 1025) + 1);
     };
-        
 
+    useEffect(() => {
+        almacenarPuntuacion(); 
+    }, [puntos]);
+        
   return (
     <>
         <div className='juego w-100 mt-5 p-3'>
-
 
         {
             acertado === 1 ? (
@@ -139,7 +174,6 @@ export function Juego() {
                 </form>
             )}
                 
-        
             <button className='btn-primary btnJuego fs-2' onClick={jugarOtraVez}>Jugar de nuevo</button>
         </div>
     </>

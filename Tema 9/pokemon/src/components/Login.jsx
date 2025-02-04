@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, GithubAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { collection, addDoc, where, getDocs, query } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export function Login() {
   const navigate = useNavigate();
@@ -26,10 +28,12 @@ export function Login() {
     try {
       if (estaIniciado) {
         await signInWithEmailAndPassword(auth, email, password);
+        await almacenarPuntuacion();
         navigate("/")
       } 
       else {
         await createUserWithEmailAndPassword(auth, email, password);
+        await almacenarPuntuacion();
         navigate("/")
       }
     } 
@@ -41,6 +45,7 @@ export function Login() {
   const iniciarConGoogle = async () => {
     try {
       await signInWithPopup(auth, googleAuthProvider);
+      await almacenarPuntuacion();
       navigate("/")
     } catch (err) {
       setError(err.message);
@@ -50,10 +55,30 @@ export function Login() {
   const iniciarConGithub = async () => {
     try {
       await signInWithPopup(auth, githubAuthProvider);
+      await almacenarPuntuacion();
       navigate("/")
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const almacenarPuntuacion = async () => {
+  
+          try {
+              const consulta = query(collection(db, 'ranking'),where("Usuario", "==", auth.currentUser.uid));
+              const consultaPuntosUsuario = await getDocs(consulta);
+              if (consultaPuntosUsuario.empty) { // Si no existe el usuario en la colección
+                await addDoc(collection(db, 'ranking'), {
+                  Usuario: auth.currentUser.uid,
+                  NombreUsuario: auth.currentUser.displayName || auth.currentUser.email,
+                  Puntuacion: 0,
+                });
+              }
+              
+          }
+          catch (error) {
+              console.log("Error al crear la puntuación " + error);
+          }
   };
 
   return (

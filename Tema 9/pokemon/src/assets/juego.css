@@ -10,6 +10,19 @@
     text-align: center;
 }
 
+.juego h2{
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-secundario); 
+    text-transform: uppercase;
+    text-shadow: 4px 4px 0px var(--color-pokemon-azul), 8px 8px 0px var(--color-pokemon-negro); 
+    letter-spacing: 2px;
+    border-bottom: 4px solid var(--color-pokemon-azul); 
+    padding-bottom: 5px;
+    font-family: var(--pokemon-font);
+    display: inline-block; 
+}
+
 .card{
     width: 20% !important;
 }
@@ -46,10 +59,18 @@
     gap: 1rem;
 }
 
-.labelForm{
+.labelForm {
     font-size: 2rem;
-    color: black;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: inline-block;
 }
+
 
 .inputForm {
     border-radius: var(--radius);
@@ -86,6 +107,14 @@
     .btnJuego{
         width: 70%;
         font-size: 1.5rem !important;
+    }
+
+    .juego h2{
+        font-size: 1.5rem;
+    }
+
+    .labelForm {
+        font-size: 1.2rem;
     }
 
     .card{

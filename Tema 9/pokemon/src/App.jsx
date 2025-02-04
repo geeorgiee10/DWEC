@@ -9,6 +9,7 @@ import { Detalle } from './components/Detalle.jsx';
 import { LandingPage } from './components/LandingPage.jsx';
 import { Login } from './components/Login.jsx';
 import { RutasProtegidas } from './components/RutasProtegidas.jsx';
+import { Rankings } from './components/Rankings.jsx';
 import './assets/App.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -16,7 +17,6 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 function App() {
 
   return (
-    <>
       
       <BrowserRouter>
       <Header /> 
@@ -29,6 +29,9 @@ function App() {
           <Route element={<RutasProtegidas />}>
             <Route path="/juego" element={<Juego />} />
           </Route>
+          <Route element={<RutasProtegidas />}>
+            <Route path="/ranking" element={<Rankings />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
@@ -38,7 +41,6 @@ function App() {
     </BrowserRouter>
         
       
-    </>
   )
 }
 

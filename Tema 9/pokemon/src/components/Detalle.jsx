@@ -81,7 +81,7 @@ export function Detalle() {
 
             <div className='moves'>
                 <h2>Moves</h2>
-                <ul>
+                <ul className='moves-container'>
                   {
                     
                     datoPokemon.moves.map((move, i) =>(
