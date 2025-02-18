@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        window.onload = () => {
+            const socket = io(); 
+            let ul = document.createElement("ul");
+            let ul2 = document.createElement("ul");   
+                
+            socket.on("HolaDesdeElServidor", (jsonDatos)=>{
+                let datos = JSON.parse(jsonDatos);
+                let li = document.createElement("li");
+                li.innerHTML = `${datos.nombre} dice: ${datos.texto}`;
+                let img = document.createElement("img");
+                img.src = datos.imagen;
+                li.appendChild(img);
+                ul.appendChild(li);
+            });
+
+            socket.on("Conectado", (nombre)=>{
+                let li2 = document.createElement("li");
+                li2.innerHTML = nombre + " se ha conectado";
+                ul.appendChild(li2);
+            });
+
+            socket.on("Desconectado", (nombre)=>{
+                let li3 = document.createElement("li");
+                li3.innerHTML = nombre + " se ha desconectado";
+                ul.appendChild(li3);
+            });
+
+            socket.on("lista", (lista)=>{
+                ul2.innerHTML = '';
+                lista.forEach(element => {
+                    let li4 = document.createElement("li");
+                    li4.innerHTML = element;
+                    ul2.appendChild(li4)
+                });
+            });
+
+            document.body.appendChild(ul);
+            document.body.appendChild(ul2);
+
+            let btn = document.getElementById("enviar");
+            let text = document.getElementById("textito");
+            let user = document.getElementById("user");
+            let photo = document.getElementById("fotito");
+            
+            user.addEventListener("change", () =>{
+                socket.emit("nombre", user.value);
+            })
+
+            btn.addEventListener("click", () =>{
+
+                let mensaje = {
+                    nombre: user.value,
+                    texto: text.value,
+                    imagen: photo.value
+                };
+
+                let json = JSON.stringify(mensaje);
+                    socket.emit("mensaje", json);
+                    text.value = '';
+            });
+
+        } 
+    </script>
+</head>
+<body>
+    Pagina incial con socket de prueba
+    <input type="text" id="user">
+    <input type="text" id="textito">
+
+    <input type="text" id="fotito">
+    <button id="enviar">Enviar</button>
+</body>
+</html>
