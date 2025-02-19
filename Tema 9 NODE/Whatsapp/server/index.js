@@ -7,15 +7,19 @@ const { createServer } = require('node:http');
 
 const app = express()
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173", 
+    methods: ["GET", "POST"]
+  }
+});
 var numeroUsuarios = 0;
 var listaUsuarios = [];
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+  res.sendFile(path.join(__dirname, '../client/WhatsAppClient/index.html'));
 })
 
-//app.use(express.static('server/public'))
 app.use(express.static(path.join(__dirname, '/public')))
 
 io.on('connection', (socket) => {
@@ -25,8 +29,8 @@ io.on('connection', (socket) => {
   socket.on("nombre", (nombre) =>{
       socket.nombre = nombre;
       socket.broadcast.emit("Conectado", nombre);
-      console.log(listaUsuarios);
       listaUsuarios.push(nombre);
+      console.log(listaUsuarios);
       io.emit("lista", listaUsuarios);
 
       socket.on('mensaje', (jsonDatos)=>{
@@ -42,10 +46,11 @@ io.on('connection', (socket) => {
         socket.broadcast.emit("Desconectado", socket.nombre);
         console.log('Ahora hay ' + numeroUsuarios + ' usuarios conectados');
       });
+      
   });
 
   
-
+  
   
 });
 
